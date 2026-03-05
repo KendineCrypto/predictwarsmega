@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ───────────────────────────────────────────────────────────────── */
+:root {
+  --bg:      #19191A;
+  --surface: #222224;
+  --border:  #2E2E30;
+  --text:    #ECE8E8;
+  --muted:   #888888;
+  --coral:   #F5949D;
+  --mint:    #90D79F;
+  --cyan:    #70BAD2;
+  --peach:   #F5AF94;
+  --lavender:#F786C6;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ── Utility classes ────────────────────────────────────────────────────── */
+
+/* Glow text */
+.glow-coral { text-shadow: 0 0 20px #F5949D80; }
+.glow-mint  { text-shadow: 0 0 20px #90D79F80; }
+.glow-cyan  { text-shadow: 0 0 20px #70BAD280; }
+
+/* Glass panel */
+.glass {
+  background: rgba(34, 34, 36, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Grid bg pattern */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Number flash animation */
+@keyframes numFlashUp {
+  0%   { color: #90D79F; }
+  100% { color: inherit; }
+}
+@keyframes numFlashDown {
+  0%   { color: #F5949D; }
+  100% { color: inherit; }
+}
+
+.flash-up   { animation: numFlashUp   0.6s ease-out forwards; }
+.flash-down { animation: numFlashDown 0.6s ease-out forwards; }
+
+/* Scanline effect on price display */
+.scanlines {
+  position: relative;
+}
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.05) 2px,
+    rgba(0,0,0,0.05) 4px
+  );
+  pointer-events: none;
+}

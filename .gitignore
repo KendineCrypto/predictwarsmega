@@ -1,0 +1,23 @@
+# Secrets — NEVER commit these
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+out/
+dist/
+artifacts/
+cache/
+typechain-types/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
