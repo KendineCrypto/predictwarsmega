@@ -2,93 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Base ───────────────────────────────────────────────────────────────── */
+/* ── Theme tokens (RGB — supports Tailwind opacity modifiers) ────────────── */
+/* Default = DARK (Night Sky) */
 :root {
-  --bg:      #19191A;
-  --surface: #222224;
-  --border:  #2E2E30;
-  --text:    #ECE8E8;
-  --muted:   #888888;
-  --coral:   #F5949D;
-  --mint:    #90D79F;
-  --cyan:    #70BAD2;
-  --peach:   #F5AF94;
-  --lavender:#F786C6;
+  --mega-bg:      25  25  26;     /* #19191A */
+  --mega-surface: 34  34  36;     /* #222224 */
+  --mega-border:  46  46  48;     /* #2E2E30 */
+  --mega-text:    236 232 232;    /* #ECE8E8 */
+  --mega-muted:   136 136 136;    /* #888888 */
+  --mega-coral:   245 148 157;    /* #F5949D */
+  --mega-peach:   245 175 148;    /* #F5AF94 */
+  --mega-mint:    144 215 159;    /* #90D79F */
+  --mega-cyan:    112 186 210;    /* #70BAD2 */
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* LIGHT mode overrides */
+:root[class~="light"] {
+  --mega-bg:      248 247 247;    /* #F8F7F7 */
+  --mega-surface: 255 255 255;    /* #FFFFFF */
+  --mega-border:  228 224 224;    /* #E4E0E0 */
+  --mega-text:    25  25  26;     /* #19191A */
+  --mega-muted:   120 112 112;    /* #787070 */
+  --mega-coral:   226 90  102;    /* slightly deeper for light bg */
+  --mega-peach:   220 148 100;    /* slightly deeper */
+  --mega-mint:    72  168  96;    /* deeper green */
+  --mega-cyan:    62  152  184;   /* deeper cyan */
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* ── Base reset ──────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
 body {
-  background-color: var(--bg);
-  color: var(--text);
+  background-color: rgb(var(--mega-bg));
+  color: rgb(var(--mega-text));
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Scrollbar */
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+::-webkit-scrollbar-track { background: rgb(var(--mega-bg)); }
+::-webkit-scrollbar-thumb { background: rgb(var(--mega-border)); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--mega-muted)); }
 
-/* ── Utility classes ────────────────────────────────────────────────────── */
+/* ── Glow text ───────────────────────────────────────────────────────────── */
+.glow-coral { text-shadow: 0 0 20px rgb(var(--mega-coral) / 0.5); }
+.glow-mint  { text-shadow: 0 0 20px rgb(var(--mega-mint)  / 0.5); }
+.glow-cyan  { text-shadow: 0 0 20px rgb(var(--mega-cyan)  / 0.5); }
 
-/* Glow text */
-.glow-coral { text-shadow: 0 0 20px #F5949D80; }
-.glow-mint  { text-shadow: 0 0 20px #90D79F80; }
-.glow-cyan  { text-shadow: 0 0 20px #70BAD280; }
-
-/* Glass panel */
+/* ── Glass panel ─────────────────────────────────────────────────────────── */
 .glass {
-  background: rgba(34, 34, 36, 0.6);
+  background: rgb(var(--mega-surface) / 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
-/* Grid bg pattern */
+/* ── Grid background ─────────────────────────────────────────────────────── */
+/* Dark: faint white lines */
 .grid-bg {
   background-image:
     linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
   background-size: 40px 40px;
 }
-
-/* Number flash animation */
-@keyframes numFlashUp {
-  0%   { color: #90D79F; }
-  100% { color: inherit; }
-}
-@keyframes numFlashDown {
-  0%   { color: #F5949D; }
-  100% { color: inherit; }
+/* Light: faint dark lines */
+:root[class~="light"] .grid-bg {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.045) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
+/* ── Number flash animations ─────────────────────────────────────────────── */
+@keyframes numFlashUp   { 0% { color: #90D79F; } 100% { color: inherit; } }
+@keyframes numFlashDown { 0% { color: #F5949D; } 100% { color: inherit; } }
 .flash-up   { animation: numFlashUp   0.6s ease-out forwards; }
 .flash-down { animation: numFlashDown 0.6s ease-out forwards; }
 
-/* Scanline effect on price display */
-.scanlines {
-  position: relative;
-}
+/* ── Scanlines ───────────────────────────────────────────────────────────── */
+.scanlines { position: relative; }
 .scanlines::after {
   content: "";
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,0.05) 2px,
-    rgba(0,0,0,0.05) 4px
+    0deg, transparent, transparent 2px,
+    rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px
   );
   pointer-events: none;
 }

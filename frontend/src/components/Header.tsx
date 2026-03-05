@@ -1,11 +1,9 @@
 "use client";
 import Image from "next/image";
 import WalletButton from "./WalletButton";
-import { useContractStats } from "@/hooks/usePredictWars";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
-  const { totalPlayers, totalPredictions } = useContractStats();
-
   return (
     <header className="
       sticky top-0 z-50
@@ -13,13 +11,14 @@ export default function Header() {
       bg-mega-bg/80 backdrop-blur-md
     ">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+
         {/* Logo */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <Image
             src="/logo.png"
             alt="PredictWars"
-            width={44}
-            height={44}
+            width={40}
+            height={40}
             className="object-contain"
             priority
           />
@@ -33,19 +32,12 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Stats pill */}
-        <div className="hidden sm:flex items-center gap-4 text-xs font-mono text-mega-muted">
-          <span>
-            <span className="text-mega-mint">{totalPlayers.toString()}</span> players
-          </span>
-          <span className="text-mega-border">|</span>
-          <span>
-            <span className="text-mega-cyan">{totalPredictions.toString()}</span> predictions
-          </span>
+        {/* Right: theme toggle + wallet */}
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <WalletButton />
         </div>
 
-        {/* Wallet */}
-        <WalletButton />
       </div>
     </header>
   );
